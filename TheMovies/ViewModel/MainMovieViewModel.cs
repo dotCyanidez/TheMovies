@@ -9,14 +9,14 @@ using TheMovies.Command;
 
 namespace TheMovies.ViewModel
 {
-    public partial class MainViewModel : ObservableObject
+    public partial class MainMovieViewModel : ObservableObject
     {
         [ObservableProperty]
         private MovieViewModel _movieVM = new();
 
         public ICommand AddMovieCommand { get;}
 
-        public MainViewModel()
+        public MainMovieViewModel()
         {
             AddMovieCommand = new AddMovieCommand();
 

@@ -21,10 +21,10 @@ namespace TheMovies.Command
 
         public void Execute(object? parameter)
         {
-            MainViewModel mvm;
-            if (parameter is MainViewModel)
+            MainMovieViewModel mmvm;
+            if (parameter is MainMovieViewModel)
             {
-                mvm = (MainViewModel)parameter;
+                mmvm = (MainMovieViewModel)parameter;
             }
             else
                 return;
@@ -36,17 +36,17 @@ namespace TheMovies.Command
             try
             {
 
-                if (mvm.MovieVM.Title.IsNullOrEmpty())
+                if (mmvm.MovieVM.Title.IsNullOrEmpty())
                     throw new Exception("Du skal skrive en titel");
 
-                if (mvm.MovieVM.Duration <= 0)
+                if (mmvm.MovieVM.Duration <= 0)
                     throw new Exception("Du skal indtaste filmens længde i minutter");
 
 
-                if (mvm.MovieVM.Genre.IsNullOrEmpty())
+                if (mmvm.MovieVM.Genre.IsNullOrEmpty())
                     throw new Exception("Du skal skrive en genre");
 
-                Exception ex = mvm.MovieVM.Add();
+                Exception ex = mmvm.MovieVM.Add();
                 if ( ex != null)
                     throw new Exception(ex.Message);
 
@@ -58,7 +58,7 @@ namespace TheMovies.Command
                 return;
             }
 
-            messageBoxText = $"Filmen: {mvm.MovieVM.Title} er tilføjet";
+            messageBoxText = $"Filmen: {mmvm.MovieVM.Title} er tilføjet";
             messageBoxCaption = "Film tilføjet";
             messageBoxResult = MessageBox.Show(messageBoxText, messageBoxCaption, button);
 

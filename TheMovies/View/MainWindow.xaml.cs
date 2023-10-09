@@ -21,11 +21,11 @@ namespace TheMovies
     /// </summary>
     public partial class MainWindow : Window
     {
-        MainViewModel mvm = new();
+        MainMovieViewModel mmvm = new();
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = mvm;
+            DataContext = mmvm;
         }
     }
 }
