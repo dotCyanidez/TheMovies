@@ -8,6 +8,7 @@ namespace TheMovies.Model
 {
     public class Cinema
     {
+        // hej Casper
         public int Id { get; set; }
         public string Name { get; }
         public  string Address { get;  }

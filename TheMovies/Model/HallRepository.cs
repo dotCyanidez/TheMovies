@@ -22,11 +22,9 @@ namespace TheMovies.Model
                 {
                     connection.Open();
                     SqlCommand sqlCommand = new("INSER INTO Hall (CinemaId, Number) Values (@CinemaId, @Number);", connection);
-
                     sqlCommand.Parameters.AddWithValue("CinemaId", hall.CinemaId);
                     sqlCommand.Parameters.AddWithValue("@Number", hall.Number);
                     sqlCommand.ExecuteScalar();
-
                 }
                 catch (Exception ex)
                 {
@@ -46,7 +44,6 @@ namespace TheMovies.Model
             using (SqlConnection connection = new(IRepository.connectionString))
             {
                 connection.Open();
-
                 SqlCommand sqlCommand = new("SELECT * FROM Hall");
                 SqlDataReader reader = sqlCommand.ExecuteReader();
 
@@ -56,7 +53,6 @@ namespace TheMovies.Model
                     cinemaId = Convert.ToInt32(reader["CinemaId"]);
                     number = Convert.ToInt32(reader["Number"]);
                     tempList.Add(new Hall(id, cinemaId, number));
-
                 }
             }
             return tempList;
@@ -77,13 +73,9 @@ namespace TheMovies.Model
                     Hall.Id = Convert.ToInt32(reader["Id"]);
                     Hall.CinemaId = Convert.ToInt32(reader["CinemaId"]);
                     Hall.Number = Convert.ToInt32(reader["Number"]);
-
                 }
                 return Hall;
-
-
             }
-
         }
     }
 }
