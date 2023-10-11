@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -10,8 +12,10 @@ namespace TheMovies.Model
 {
     public class HallRepository : IRepository
     {
+        #region Props
         public Hall Hall { get; set; }
         public List<Hall> Halls { get; set; }
+        #endregion
 
         public void Add(Hall hall)
         {
@@ -21,12 +25,10 @@ namespace TheMovies.Model
                 try
                 {
                     connection.Open();
-                    SqlCommand sqlCommand = new("INSER INTO Hall (CinemaId, Number) Values (@CinemaId, @Number);", connection);
-
-                    sqlCommand.Parameters.AddWithValue("CinemaId", hall.CinemaId);
-                    sqlCommand.Parameters.AddWithValue("@Number", hall.Number);
+                    SqlCommand sqlCommand = new("exec sp_AddNewHall @CinemaId = @cinemaId, @Number = @number;", connection);
+                    sqlCommand.Parameters.AddWithValue("@cinemaId", hall.CinemaId);
+                    sqlCommand.Parameters.AddWithValue("@number", hall.Number);
                     sqlCommand.ExecuteScalar();
-
                 }
                 catch (Exception ex)
                 {
@@ -46,8 +48,7 @@ namespace TheMovies.Model
             using (SqlConnection connection = new(IRepository.connectionString))
             {
                 connection.Open();
-
-                SqlCommand sqlCommand = new("SELECT * FROM Hall");
+                SqlCommand sqlCommand = new("exec  sp_SelectAllFromHall", connection);
                 SqlDataReader reader = sqlCommand.ExecuteReader();
 
                 while (reader.Read())
@@ -56,9 +57,9 @@ namespace TheMovies.Model
                     cinemaId = Convert.ToInt32(reader["CinemaId"]);
                     number = Convert.ToInt32(reader["Number"]);
                     tempList.Add(new Hall(id, cinemaId, number));
-
                 }
             }
+
             return tempList;
         }
         public Hall Get(int Id)
@@ -68,7 +69,7 @@ namespace TheMovies.Model
             using SqlConnection connection = new(IRepository.connectionString);
             {
                 connection.Open();
-                SqlCommand command = new($"SELECT * FROM Hall Where Id = @Id", connection);
+                SqlCommand command = new("exec sp_SpecificHall @ID = @Id ", connection);
                 command.Parameters.Add("@Id", SqlDbType.Int).Value = Id;
 
                 SqlDataReader reader = command.ExecuteReader();
@@ -77,13 +78,33 @@ namespace TheMovies.Model
                     Hall.Id = Convert.ToInt32(reader["Id"]);
                     Hall.CinemaId = Convert.ToInt32(reader["CinemaId"]);
                     Hall.Number = Convert.ToInt32(reader["Number"]);
-
                 }
                 return Hall;
-
-
             }
+        }
 
+        public void Delete(int Id)
+        {
+            using SqlConnection connection = new(IRepository.connectionString);
+            {
+                connection.Open();
+                SqlCommand command = new("exec sp_DeleteHall @ID = @Id", connection);
+                command.Parameters.AddWithValue("@Id", Id);
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public void Update(Hall hall)
+        {
+            using SqlConnection connection = new(IRepository.connectionString);
+            {
+                connection.Open();
+                SqlCommand command = new("exec sp_UpdateHall @ID = @Id, @CinemaId = @cinemaId, @Number = @number", connection);
+                command.Parameters.AddWithValue("@Id", hall.Id);
+                command.Parameters.AddWithValue("@cinemaId", hall.CinemaId);
+                command.Parameters.AddWithValue("@number", hall.Number);
+                command.ExecuteScalar();
+            }
         }
     }
 }
