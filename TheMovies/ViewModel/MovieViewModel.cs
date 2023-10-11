@@ -10,7 +10,7 @@ namespace TheMovies.ViewModel
 {
     public partial class MovieViewModel : ObservableObject
     {
-        private Movie _movie = new();
+        private Movie _movie;
         private MovieRepository _movieRepository = new();
         [ObservableProperty]
         private string _title;
