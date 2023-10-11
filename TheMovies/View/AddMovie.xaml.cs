@@ -12,26 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using TheMovies.View;
-using TheMovies.ViewModel;
 
-namespace TheMovies
+namespace TheMovies.View
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for AddMovie.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class AddMovie : UserControl
     {
-        MainMovieViewModel mmvm = new();
-        public MainWindow()
+        public AddMovie()
         {
             InitializeComponent();
-            DataContext = mmvm;
-        }
-
-        private void MenuItem_AddMovie_Click(object sender, RoutedEventArgs e)
-        {
-            DataContext = new MainMovieViewModel();
         }
     }
 }

@@ -38,6 +38,16 @@ namespace TheMovies.Model
             }
         }
 
-
+        public void Delete(int id)
+        {
+            using (SqlConnection con = new(IRepository.connectionString)) 
+            {
+                con.Open();
+                SqlCommand cmd = new("DELETE * FROM Movie WHERE Id = @id", con);
+                cmd.Parameters.Add("@id", SqlDbType.Int).Value=id;
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+        }
     }
 }
