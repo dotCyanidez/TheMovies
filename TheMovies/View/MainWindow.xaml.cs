@@ -23,10 +23,12 @@ namespace TheMovies
     public partial class MainWindow : Window
     {
         MainMovieViewModel mmvm = new();
+
         public MainWindow()
         {
             InitializeComponent();
             DataContext = mmvm;
+            
         }
 
         private void MenuItem_AddMovie_Click(object sender, RoutedEventArgs e)

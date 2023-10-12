@@ -3,58 +3,90 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TheMovies" 
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        xmlns:local="clr-namespace:TheMovies.ViewModel"
+        d:DataContext="{d:DesignInstance Type=local:MainShowViewModel}"
+        Title="MainWindow"
+        Height="450"
+        Width="800">
+
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
         </Grid.RowDefinitions>
-        <StackPanel Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="1" Grid.RowSpan="4">
-            <Label Content="Titel"/>
-            <TextBox Text="{Binding MovieVM.Title}" Margin="0,0,0,10" />
-            <Label Content="Spilletid"/>
-            <TextBox Text="{Binding MovieVM.Duration}" Margin="0,0,0,10" />
-            <Label Content="Genre"/>
-            <TextBox Text="{Binding MovieVM.Genre}" Margin="0,0,0,10"/>
-            <Button Content="Tilføj Film" Command="{Binding AddMovieCommand}" CommandParameter="{Binding}" MaxWidth="80" Height="30" />
+        <StackPanel Grid.Column="1"
+                    Grid.Row="1"
+                    Grid.ColumnSpan="1"
+                    Grid.RowSpan="4">
+            <Label Content="Titel" />
+            <TextBox Text="{Binding MovieVM.Title}"
+                     Margin="0,0,0,10" />
+            <Label Content="Spilletid" />
+            <TextBox Text="{Binding MovieVM.Duration}"
+                     Margin="0,0,0,10" />
+            <Label Content="Genre" />
+            <TextBox Text="{Binding MovieVM.Genre}"
+                     Margin="0,0,0,10" />
+            <Button Content="Tilføj Film"
+                    Command="{Binding AddMovieCommand}"
+                    CommandParameter="{Binding}"
+                    MaxWidth="80"
+                    Height="30" />
         </StackPanel>
-        <StackPanel Grid.Column="3" Grid.Row="3" >
+
+        <!--listbox-->
+        <StackPanel Grid.Column="3"
+                    Grid.Row="1">
+            <ListBox ItemsSource="{Binding ShowVms}"
+                     >
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+
+                            <TextBlock Height="40" Text="{Binding MovieTitle}" />
+                            <TextBlock Height="40" Text="{Binding Duration}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </StackPanel>
 
-
-
-
-        <DockPanel Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="1" Grid.RowSpan="5">
+        <DockPanel Grid.Column="0"
+                   Grid.Row="0"
+                   Grid.ColumnSpan="1"
+                   Grid.RowSpan="5">
             <Menu FontSize="16">
                 <Menu.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <VirtualizingStackPanel Orientation="Vertical"/>
+                        <VirtualizingStackPanel Orientation="Vertical" />
                     </ItemsPanelTemplate>
                 </Menu.ItemsPanel>
                 <MenuItem Header="Film">
-                    <MenuItem Header="Tilføj" Click="MenuItem_AddMovie_Click"  />
-                    <MenuItem Header="Opdater"/>
+                    <MenuItem Header="Tilføj"
+                              Click="MenuItem_AddMovie_Click" />
+                    <MenuItem Header="Opdater" />
                 </MenuItem>
-                <MenuItem Header="Forestilling" >
-                    <MenuItem Header="Tilføj"/>
-                    <MenuItem Header="Opdater"/>
-                    <MenuItem Header="Slet"/>
+                <MenuItem Header="Forestilling">
+                    <MenuItem Header="Tilføj" />
+                    <MenuItem Header="Opdater" />
+                    <MenuItem Header="Slet" />
                 </MenuItem>
-                <MenuItem Header="Program"/>
+                <MenuItem Header="Program" />
             </Menu>
         </DockPanel>
     </Grid>
-    
+    <!--<Window.DataContext>
+        <TheMovies.ViewModel:MainShowViewModel />
+    </Window.DataContext>-->
 </Window>
